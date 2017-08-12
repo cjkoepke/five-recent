@@ -66,6 +66,10 @@ class Post extends Component {
                       </div>
                     : <div className="post-list__item__edit post-list__item__meta">
                         <button className="button button-primary" onClick={() => {this.setState({editing: true})}}>Change Title</button>
+                        <button className="button button-primary" onClick={this.handleImageEdit}>
+                            <span className="dashicons dashicons-format-image"></span>
+                            <span className="screen-reader-text">Edit Featured Image</span>
+                        </button>
                         <button data-id={this.props.data.id} className="button" onClick={this.props.onDeletePost}>Delete Post</button>
                       </div>}
             </li>
