@@ -5,7 +5,7 @@
 
 .post-list__item {
     display: grid;
-    grid-template-columns: 80px 1fr 200px;
+    grid-template-columns: 50px 1fr 300px;
     align-items: center;
     padding: 15px 20px;
     border-bottom: 1px solid #ccc;
@@ -31,14 +31,17 @@
     float: left;
 }
 
+.post-list__item__image img {
+    height: 50px;
+    vertical-align: middle;
+    width: 50px;
+}
+
 .post-list__item__title {
     color: #111;
     margin-top: 5px;
     margin-bottom: 0;
-}
-
-.post-list__item:hover {
-    cursor: pointer;
+    padding-left: 20px;
 }
 
 .post-list__item:focus,
@@ -55,8 +58,10 @@
     width: 100%;
 }
 
-.post-list__item__save {
-    margin-top: 10px;
+@supports (display: grid) {
+    .post-list__item__save {
+        margin-top: 10px;
+    }
 }
 
 .wp-core-ui .post-list__item__meta a.button {
@@ -64,6 +69,7 @@
 }
 
 .post-list__item__meta {
+    justify-self: end;
     float: right;
 }
 

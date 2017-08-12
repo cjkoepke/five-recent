@@ -1,32 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import wp from '../utils/api'
+import placeholder from '../placeholder.jpg'
 
 class Post extends Component {
     constructor(props) {
         super(props)
         this.state = {
             editing: false,
-            title: this.props.title,
+            title: this.props.data.title.rendered,
             image: null
         }
     }
 
     componentDidMount() {
-        wp.media().id(this.props.mediaId)
+        // If no featured image, don't fetch.
+        if (this.props.data.featured_media === 0) {
+            return;
+        }
+
+        wp.media()
+            .id(this.props.data.featured_media)
             .then(image => {
                 const url = image.media_details.sizes.thumbnail.source_url
                 this.setState({
                     image: url
                 })
             })
-    }
-
-    handleTitleClick = () => {
-        if (this.state.editing) {
-            return;
-        }
-        this.setState((prevState) => ({editing: !prevState.editing}))
     }
 
     handleTitleEdit = (e) => {
@@ -38,21 +38,20 @@ class Post extends Component {
         e.preventDefault()
         this.setState((prevState) => ({
             editing: !prevState.editing,
-            title: this.props.title
+            title: this.props.data.title.rendered
         }))
     }
 
     render() {
         const title = this.state.title
         const editing = this.state.editing
-        const image = this.state.image
+        const image = this.state.image || placeholder
         return (
-            <li
-                className="post-list__item"
-                onClick={this.handleTitleClick}>
-                {image
-                    ? <img className="post-list__item__image" width="50" height="50" src={image} alt={title} />
-                    : <a href="#" className="button" onClick={this.handleImageEdit}>Add Image</a>}
+            <li tabIndex="1" className="post-list__item">
+                <div className="post-list__item__image">
+                    {image &&
+                        <img width="50" height="50" src={image} alt={title} />}
+                </div>
                 {editing
                     ? <input
                         className="post-list__item__input"
@@ -62,12 +61,12 @@ class Post extends Component {
                     : <h4 className="post-list__item__title">{title}</h4>}
                 {editing
                     ? <div className="post-list__item__save post-list__item__meta">
-                        <a href="#" className="button button-primary" onClick={this.saveTitle}>Save Post</a>
+                        <a href="#" className="button button-primary" onClick={this.saveTitle}>Save Title</a>
                         <a href="#" className="button" onClick={this.cancelEdit}>Cancel</a>
                       </div>
                     : <div className="post-list__item__edit post-list__item__meta">
-                        <a href="#" className="button button-primary" onClick={this.handleTitleEdit}>Edit Title</a>
-                        <a href="#" className="button button-danger" onClick={this.deletePost}>Delete Post</a>
+                        <button className="button button-primary" onClick={() => {this.setState({editing: true})}}>Change Title</button>
+                        <button data-id={this.props.data.id} className="button" onClick={this.props.onDeletePost}>Delete Post</button>
                       </div>}
             </li>
         )
@@ -76,7 +75,7 @@ class Post extends Component {
 
 Post.propTypes = {
     title: PropTypes.string.isRequired,
-    mediaId: PropTypes.number.isRequired
+    data: PropTypes.object.isRequired
 }
 
 export default Post
