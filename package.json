@@ -1,0 +1,13 @@
+{
+  "name": "five-recent",
+  "version": "0.9.0",
+  "description": "Basic WordPress plugin to manage and modify the last 5 posts. An experiment with React + WP-API.",
+  "main": "./view/index.js",
+  "repository": "https://github.com/cjkoepke/five-recent/",
+  "author": "Calvin Koepke",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}
