@@ -54,13 +54,8 @@
 }
 
 .post-list__item__input {
+    margin-left: 20px;
     width: 100%;
-}
-
-@supports (display: grid) {
-    .post-list__item__save {
-        margin-top: 10px;
-    }
 }
 
 .wp-core-ui .post-list__item__meta .button {

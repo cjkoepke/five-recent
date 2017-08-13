@@ -14,6 +14,7 @@ class Post extends Component {
     }
 
     componentDidMount() {
+
         // If no featured image, don't fetch.
         if (this.props.data.featured_media === 0) {
             return;
@@ -29,9 +30,18 @@ class Post extends Component {
             })
     }
 
-    handleTitleEdit = (e) => {
+    handleTitleChange = (e) => {
         const title = e.target.value
-        this.setState(() => ({title}))
+        this.setState({title})
+    }
+
+    handleTitleSave = () => {
+        wp.posts()
+            .id(this.props.data.id)
+            .update({
+                title: this.state.title
+            })
+            .then(res => this.setState({editing: false}))
     }
 
     cancelEdit = (e) => {
@@ -56,16 +66,16 @@ class Post extends Component {
                     ? <input
                         className="post-list__item__input"
                         type="text"
-                        onChange={this.handleTitleEdit}
-                        value={this.state.title} />
+                        onChange={this.handleTitleChange}
+                        value={title} />
                     : <h4 className="post-list__item__title">{title}</h4>}
                 {editing
                     ? <div className="post-list__item__save post-list__item__meta">
-                        <a href="#" className="button button-primary" onClick={this.saveTitle}>Save Title</a>
+                        <a href="#" className="button button-primary" onClick={this.handleTitleSave}>Save Title</a>
                         <a href="#" className="button" onClick={this.cancelEdit}>Cancel</a>
                       </div>
                     : <div className="post-list__item__edit post-list__item__meta">
-                        <button className="button button-primary" onClick={() => {this.setState({editing: true})}}>Change Title</button>
+                        <button className="button button-primary" onClick={() => { this.setState({editing: true})}}>Change Title</button>
                         <button className="button button-primary" onClick={this.handleImageEdit}>
                             <span className="dashicons dashicons-format-image"></span>
                             <span className="screen-reader-text">Edit Featured Image</span>
