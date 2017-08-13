@@ -31,9 +31,19 @@
     float: left;
 }
 
+.post-list__item__image {
+    text-align: center;
+}
+
 .post-list__item__image img {
     height: 50px;
     vertical-align: middle;
+    width: 50px;
+}
+
+.post-list__item__image .dashicons {
+    animation: spin .75s linear infinite;
+    height: 50px;
     width: 50px;
 }
 
@@ -75,4 +85,13 @@
 .post-list__item__edit {
     opacity: 0;
     transition: opacity .35s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes spin {
+    0%   {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

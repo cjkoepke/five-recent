@@ -1403,6 +1403,16 @@ component-emitter@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
 
+component-event@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/component-event/-/component-event-0.1.4.tgz#3de78fc28782381787e24bf2a7c536bf0142c9b4"
+
+component-file-picker@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/component-file-picker/-/component-file-picker-0.2.1.tgz#14837f32d700d1575ec3baaa173ccdcf27e34e31"
+  dependencies:
+    component-event "0.1.4"
+
 compressible@~2.0.10:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.11.tgz#16718a75de283ed8e604041625a2064586797d8a"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import wp from '../utils/api'
+import filePicker from 'component-file-picker'
 import placeholder from '../placeholder.jpg'
 
 class Post extends Component {
@@ -9,24 +10,26 @@ class Post extends Component {
         this.state = {
             editing: false,
             title: this.props.data.title.rendered,
-            image: null
+            image: placeholder,
+            imageUploading: true
         }
     }
 
     componentDidMount() {
 
-        // If no featured image, don't fetch.
+        // If no featured image, don't fetch and use placeholder.
         if (this.props.data.featured_media === 0) {
+            this.setState(prevState => ({imageUploading: !prevState.imageUploading}))
             return;
         }
 
         wp.media()
             .id(this.props.data.featured_media)
             .then(image => {
-                const url = image.media_details.sizes.thumbnail.source_url
-                this.setState({
-                    image: url
-                })
+                this.setState((prevState) => ({
+                    image: image.media_details.sizes.thumbnail.source_url,
+                    imageUploading: !prevState.imageUploading
+                }))
             })
     }
 
@@ -44,6 +47,31 @@ class Post extends Component {
             .then(res => this.setState({editing: false}))
     }
 
+    handleImageUpload = () => {
+        filePicker({
+            accept: ['.jpg', '.jpeg', '.png', '.gif']
+        }, files => {
+            wp.media()
+                .file( files[0] )
+                .create()
+                .then(image => {
+                    this.setState((prevState) => ({
+                        image: image.media_details.sizes.thumbnail.source_url,
+                        imageUploading: !prevState.imageUploading
+                    }))
+                    return wp.posts().id(this.props.data.id).update({
+                        featured_media: image.id
+                    })
+                })
+                .then(post => {
+                    this.setState((prevState) => ({
+                        imageUploading: !prevState.imageUploading
+                    }))
+                })
+                .catch(err => console.log(err))
+        })
+    }
+
     cancelEdit = (e) => {
         e.preventDefault()
         this.setState((prevState) => ({
@@ -55,12 +83,15 @@ class Post extends Component {
     render() {
         const title = this.state.title
         const editing = this.state.editing
-        const image = this.state.image || placeholder
+        const image = this.state.image
+        const imageUploading = this.state.imageUploading
         return (
             <li tabIndex="1" className="post-list__item">
                 <div className="post-list__item__image">
-                    {image &&
+                    {!imageUploading &&
                         <img width="50" height="50" src={image} alt={title} />}
+                    {imageUploading &&
+                        <span className="dashicons dashicons-image-filter"></span>}
                 </div>
                 {editing
                     ? <input
@@ -76,7 +107,7 @@ class Post extends Component {
                       </div>
                     : <div className="post-list__item__edit post-list__item__meta">
                         <button className="button button-primary" onClick={() => { this.setState({editing: true})}}>Change Title</button>
-                        <button className="button button-primary" onClick={this.handleImageEdit}>
+                        <button className="button button-primary" onClick={this.handleImageUpload}>
                             <span className="dashicons dashicons-format-image"></span>
                             <span className="screen-reader-text">Edit Featured Image</span>
                         </button>
