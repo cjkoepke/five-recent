@@ -15,9 +15,11 @@ class Post extends Component {
         }
     }
 
+    /**
+     * If no featured image, don't fetch and use placeholder.
+     * Otherwise, fetch the featured image and update.
+     */
     componentDidMount() {
-
-        // If no featured image, don't fetch and use placeholder.
         if (this.props.data.featured_media === 0) {
             this.setState(prevState => ({imageUploading: !prevState.imageUploading}))
             return;
@@ -33,11 +35,18 @@ class Post extends Component {
             })
     }
 
+    /**
+     * Handler to update the title change when editing.
+     */
     handleTitleChange = (e) => {
         const title = e.target.value
         this.setState({title})
     }
 
+    /**
+     * Handler to persist title update to the server,
+     * and return state to non-editing mode.
+     */
     handleTitleSave = () => {
         wp.posts()
             .id(this.props.data.id)
@@ -47,6 +56,12 @@ class Post extends Component {
             .then(res => this.setState({editing: false}))
     }
 
+    /**
+     * Handler to open file picker, send first image
+     * selected to the server, then updated post with that image.
+     * This could and should be broken up into separate functions,
+     * but there's only so much you can refactor in a weekend. ;-)
+     */
     handleImageUpload = () => {
         filePicker({
             accept: ['.jpg', '.jpeg', '.png', '.gif']
@@ -72,7 +87,11 @@ class Post extends Component {
         })
     }
 
-    cancelEdit = (e) => {
+    /**
+     * Handler to cancel the editing state of the title,
+     * and restore it to the original version.
+     */
+    cancelTitleEdit = (e) => {
         e.preventDefault()
         this.setState((prevState) => ({
             editing: !prevState.editing,
@@ -103,7 +122,7 @@ class Post extends Component {
                 {editing
                     ? <div className="post-list__item__save post-list__item__meta">
                         <a href="#" className="button button-primary" onClick={this.handleTitleSave}>Save Title</a>
-                        <a href="#" className="button" onClick={this.cancelEdit}>Cancel</a>
+                        <a href="#" className="button" onClick={this.cancelTitleEdit}>Cancel</a>
                       </div>
                     : <div className="post-list__item__edit post-list__item__meta">
                         <button className="button button-primary" onClick={() => { this.setState({editing: true})}}>Change Title</button>
@@ -119,8 +138,8 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-    title: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    onDeletePost: PropTypes.func.isRequired
 }
 
 export default Post

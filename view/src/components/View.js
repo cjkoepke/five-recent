@@ -9,20 +9,25 @@ class View extends Component {
         error: false
     }
 
+    /**
+     * Get the initial post query results on mount.
+     */
     componentDidMount() {
         this.getPostList()
     }
 
+    /**
+     * Get the post list (max 5) and update the state.
+     */
     getPostList = () => {
-        this.setState({loaded: false})
         wp.posts()
             .perPage(5)
             .then(posts => {
-                this.setState((prevState) => ({
-                    loaded: !prevState.loaded,
+                this.setState({
+                    loaded: true,
                     error: false,
                     posts
-                }))
+                })
             })
             .catch(err => {
                 this.setState({
@@ -32,24 +37,37 @@ class View extends Component {
             })
     }
 
+    /**
+     * User can only delete one post at a time, so let's conserve
+     * resources here and only fetch one from the DB.
+     */
     updatePostList = (id) => {
-        // Can only delete one post at a time, so only fetch one.
         wp.posts()
             .perPage(1)
             .offset(4)
             .then(newPost => {
                 this.setState((prevState) => {
-                    // Remove deleted post from post list.
+
+                    /**
+                     * Remove the deleted post from our post array
+                     * and push the new post to the end (since it's newest).
+                     */
                     const posts = [...prevState.posts]
                         .filter(post => post.id !== id)
                         .concat(newPost)
 
                     return {posts};
+
                 })
             })
 
     }
 
+    /**
+     * Callback function to persist removal of the post
+     * to the server's database. Update the post list once
+     * this is complete.
+     */
     deletePost = (e) => {
         const id = parseInt(e.target.getAttribute('data-id'))
         wp.posts()
@@ -79,4 +97,4 @@ class View extends Component {
     }
 }
 
-export default View;
+export default View
