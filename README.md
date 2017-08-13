@@ -22,7 +22,7 @@ After this is done, you can activate the plugin in your WordPress dashboard.
 ## Usage
 Once you've built and activated the plugin in your local WordPress installation, you'll see a new submenu appear under Posts:
 
-![Navigation Submenu for Five Recent](https://github.com/cjkoepke/five-recent/tree/master/docs/navigation.png)
+![Navigation Submenu for Five Recent](https://github.com/cjkoepke/five-recent/blob/master/docs/navigation.png "Navigation Example")
 
 Once there, you can do the following:
 
