@@ -14,12 +14,12 @@ From there, clone the repo and `cd` into the root folder for the React app:
 $ git clone https://github.com/cjkoepke/five-recent.git && cd five-recent/view
 ```
 
-Install the dependancies and generate a build. You can either do this via [npm](https://npmjs.org) or [Yarn](https://yarnpkg.com/en/):
+The build is already included in the repo (for those who can't compile). But, if you prefer to build a fresh installation, you can either do this via [npm](https://npmjs.org) or [Yarn](https://yarnpkg.com/en/):
 ```bash
 $ yarn install && yarn build
 ```
 
-After this is done, you can activate the plugin in your WordPress dashboard.
+After this is done, you can activate the plugin in your WordPress dashboard. You'll also need to do this if you want to [submit any pull requests](#contributing).
 
 ## Usage
 Once you've built and activated the plugin in your local WordPress installation, you'll see a new submenu appear under Posts:
