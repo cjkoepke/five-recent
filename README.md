@@ -4,6 +4,10 @@ This was a weekend project to build a concept: WordPress options page that runs 
 ![Admin View](https://github.com/cjkoepke/five-recent/blob/master/docs/five-recent-admin.png "Administration View Example")
 
 ## Installation
+### Via ZIP
+If you don't want to deal with building and/or terminal, simply download this repo as a ZIP file and install like a normal WordPress plugin.
+
+### Via Terminal
 In a terminal (I use [Hyper](https://hyper.is/) and love it), navigate to your local WordPress' plugin folder:
 ```bash
 $ cd /path/to/wordpress/plugins/
