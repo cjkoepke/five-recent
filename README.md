@@ -1,6 +1,8 @@
 # Five Recent - WP Plugin Concept
 This was a weekend project to build a concept: WordPress options page that runs entirely through [React](https://reactjs.org). It should **not** be used in production since there is very little sanitation going on via the client.
 
+![Admin View](https://github.com/cjkoepke/five-recent/blob/master/docs/five-recent-admin.png "Administration View Example")
+
 ## Installation
 In a terminal (I use [Hyper](https://hyper.is/) and love it), navigate to your local WordPress' plugin folder:
 ```bash
