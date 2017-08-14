@@ -48,3 +48,8 @@ This client seriously rocks. It's super easy to do just about anything you would
 A really simple, intuitive component to handle file uploads without having to use the `<input type="file">` interface (which can make things ugly).
 
 [See Documentation](https://www.npmjs.com/package/component-file-picker)
+
+## Contributing
+If you would like to contribute to this plugin (i.e. you have suggestions on structure, want to expand functionality, or think it could be done better), feel free to [submit a pull request](https://github.com/cjkoepke/five-recent/compare).
+
+Please keep in mind that since this is a side-project and simply for gaining experience with the WPAPI and React relationship, pull requests may or may not be merged. Therefore, any submissions should be done purely as an afterthought of the initial desire to learn and play with the plugin, and not as the primary goal. ;-)
